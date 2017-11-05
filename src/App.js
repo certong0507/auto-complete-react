@@ -13,6 +13,7 @@ export default connect((state) => state)(
                 value: '',
                 autor: '',
                 bookname: '',
+                series: '',
                 booklist: []
             };
 
@@ -29,31 +30,33 @@ export default connect((state) => state)(
         }
 
         onSelect(val){
-            this.setState({ value: val, author: val.split('-')[0], bookname: val.split('-')[1]});
+            this.setState({ value: val, author: val.split('-')[0], bookname: val.split('-')[1], series: val.split('-')[2]});
             console.log("Option from 'database' selected : ", val);
         }
 
         renderItem(item, isHighlighted){
             return (
-                <div key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                    {item.author} - {item.name}
+                <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                    {item.author} - {item.name} - {item.series}
                 </div>   
             ); 
         }
 
         getItemValue(item){
-            return `${item.author}` + ' - ' + `${item.name}`;
+            return `${item.author}` + ' - ' + `${item.name}` + ' - ' + `${item.series}`;
         }
         
         matchStateToTerm(state, value) {
             return (
-              state.author.toLowerCase().indexOf(value.toLowerCase()) !== -1
+                state.author.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+                state.name.toString().toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
+                state.series.toLowerCase().indexOf(value.toLowerCase()) !== -1
             )
         }
 
         clearSearch(e){
             return (
-                this.setState({ value: '', author: '', bookname: '' })
+                this.setState({ value: '', author: '', bookname: '', series: '' })
             )
         }
 
@@ -91,6 +94,10 @@ export default connect((state) => state)(
                                 <div>
                                     <span style={{paddingRight: '10px'}}>Book :</span>
                                     <span className="text-muted">{this.state.bookname}</span>
+                                </div>
+                                <div>
+                                    <span style={{paddingRight: '10px'}}>Series :</span>
+                                    <span className="text-muted">{this.state.series}</span>
                                 </div>
                             </div>
                         </div>
