@@ -45,6 +45,12 @@ export default connect((state) => state)(
             return `${item.author}` + ' - ' + `${item.name}`;
         }
         
+        matchStateToTerm(state, value) {
+            return (
+              state.author.toLowerCase().indexOf(value.toLowerCase()) !== -1
+            )
+        }
+
         clearSearch(e){
             return (
                 this.setState({ value: '', author: '', bookname: '' })
@@ -72,7 +78,7 @@ export default connect((state) => state)(
                         value={this.state.value}
                         onChange={this.onChange}
                         onSelect={this.onSelect}
-                        shouldItemRender={matchStateToTerm}
+                        shouldItemRender={this.matchStateToTerm}
                     />
                     <div className="card" style={{width: '20rem', marginLeft: '20px'}}>
                         <div className="card-body">
@@ -94,9 +100,3 @@ export default connect((state) => state)(
             );
         }
 });
-
-function matchStateToTerm(state, value) {
-    return (
-      state.author.toLowerCase().indexOf(value.toLowerCase()) !== -1
-    )
-  }
