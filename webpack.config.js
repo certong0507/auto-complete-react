@@ -28,12 +28,25 @@ const config = {
           loader: 'babel-loader',
         },
       },
-    // In case css needed in the project.
-    //   {
-    //     test: /\.css$/,  
-    //     include: /node_modules/,  
-    //     loaders: ['style-loader', 'css-loader'],
-    //   },
+      {
+        test: /\.css$/,  
+        include: /node_modules/,  
+        loaders: ['style-loader', 'css-loader'],
+      },
+      {
+      test: require.resolve('jquery'),
+      use: [
+        { loader: 'expose-loader', options: 'jQuery' },
+        { loader: 'expose-loader', options: '$' }
+      ]
+    },
+    
+    {
+      test: require.resolve('tether'),
+      use: [
+        { loader: 'expose-loader', options: 'Tether' }
+      ]
+    }
     ],
   },
 };

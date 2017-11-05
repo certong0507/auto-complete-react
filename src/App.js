@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import fetch from 'isomorphic-fetch';
 import Autocomplete from 'react-autocomplete';
+import { Card } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 
 export default connect((state) => state)(
     class App extends Component{
         constructor(prop){
             super(prop);
             this.state= {
-                value: "",
+                value: '',
+                autor: '',
+                bookname: '',
                 booklist: []
             };
 
@@ -16,6 +20,7 @@ export default connect((state) => state)(
             this.onSelect = this.onSelect.bind(this);
             this.getItemValue = this.getItemValue.bind(this);
             this.renderItem = this.renderItem.bind(this);
+            this.clearSearch = this.clearSearch.bind(this);
         }
 
         onChange(e){
@@ -24,25 +29,28 @@ export default connect((state) => state)(
         }
 
         onSelect(val){
-            this.setState({ value: val });
+            this.setState({ value: val, author: val.split('-')[0], bookname: val.split('-')[1]});
             console.log("Option from 'database' selected : ", val);
         }
 
         renderItem(item, isHighlighted){
             return (
                 <div key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
-                    {item.name}
+                    {item.author} - {item.name}
                 </div>   
             ); 
         }
 
         getItemValue(item){
-            // You can obviously only return the Label or the component you need to show
-            // In this case we are going to show the value and the label that shows in the input
-            // something like "1 - Microsoft"
-            return `${item.name}`;
+            return `${item.author}` + ' - ' + `${item.name}`;
         }
         
+        clearSearch(e){
+            return (
+                this.setState({ value: '', author: '', bookname: '' })
+            )
+        }
+
         componentDidMount() {
             const self = this;
             fetch('http://localhost:3001/booklist')
@@ -56,6 +64,7 @@ export default connect((state) => state)(
         render(){
             return (
                 <div>
+                    <h3 style={{padding: '20px 0px 0px 20px'}}>Search by author/book name : </h3>
                     <Autocomplete
                         getItemValue={this.getItemValue}
                         items={this.state.booklist}
@@ -65,6 +74,22 @@ export default connect((state) => state)(
                         onSelect={this.onSelect}
                         shouldItemRender={matchStateToTerm}
                     />
+                    <div className="card" style={{width: '20rem', marginLeft: '20px'}}>
+                        <div className="card-body">
+                            <h4 className="card-title">Selected author/book : </h4>
+                            <div className="card-text">
+                                <div>
+                                    <span style={{paddingRight: '10px'}}>Author:</span>
+                                    <span className="text-muted">{this.state.author}</span>
+                                </div>
+                                <div>
+                                    <span style={{paddingRight: '10px'}}>Book:</span>
+                                    <span className="text-muted">{this.state.bookname}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" className="btn btn-primary" onClick={this.clearSearch}>Clear</button>
+                    </div>
                 </div>
             );
         }
@@ -72,7 +97,6 @@ export default connect((state) => state)(
 
 function matchStateToTerm(state, value) {
     return (
-      state.name.toLowerCase().indexOf(value.toLowerCase()) !== -1 ||
       state.author.toLowerCase().indexOf(value.toLowerCase()) !== -1
     )
   }

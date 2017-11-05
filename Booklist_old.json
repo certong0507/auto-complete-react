@@ -1,0 +1,28 @@
+{
+  "booklist": [
+    {
+      "id": 1,
+      "author": "Sam Sykes",
+      "series": "The Aeon's Gate",
+      "name": "Tome of the Undergates"
+    },
+    {
+      "id": 2,
+      "author": "Karl Marlantes",
+      "series": "",
+      "name": "Matterhorn: A Novel of the Vietnam War"
+    },
+    {
+      "id": 4,
+      "author": "M. T. Mustian",
+      "series": "",
+      "name": "The Gendarme"
+    },
+    {
+      "id": 3,
+      "author": "Joshua Corin",
+      "series": "",
+      "name": "While Galileo Preys"
+    }
+  ]
+}
