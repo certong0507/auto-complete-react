@@ -76,14 +76,14 @@ export default connect((state) => state)(
                     />
                     <div className="card" style={{width: '20rem', marginLeft: '20px'}}>
                         <div className="card-body">
-                            <h4 className="card-title">Selected author/book : </h4>
+                            <h4 className="card-title">Aauthor and Book</h4>
                             <div className="card-text">
                                 <div>
-                                    <span style={{paddingRight: '10px'}}>Author:</span>
+                                    <span style={{paddingRight: '10px'}}>Author :</span>
                                     <span className="text-muted">{this.state.author}</span>
                                 </div>
                                 <div>
-                                    <span style={{paddingRight: '10px'}}>Book:</span>
+                                    <span style={{paddingRight: '10px'}}>Book :</span>
                                     <span className="text-muted">{this.state.bookname}</span>
                                 </div>
                             </div>
